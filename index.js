@@ -40,20 +40,20 @@ document
     document.querySelector(".result").textContent = calculate;
   });
 
-document //BIKIN PERSENTASENYA RELATIF SAMA BILANGAN SEBBELUMNYA
+document //BIKIN PERSENTASENYA RELATIF SAMA BILANGAN SEBBELUMNYA dan bener pas x + x%
   .querySelector(".button-percentage")
   .addEventListener("click", function () {
     const percentage = this.dataset.value;
     let lastChar = calculate.slice(-1);
     let firstChars = calculate.toString();
 
-    if ("+-*/".includes(lastChar)) {
+    if ("+-*/,".includes(lastChar)) {
       calculate = calculate.slice(0, -1) + percentage;
     } else {
-      try {
+      if ("+-*/,".includes(calculate)) {
+        calculate = calculate + percentage;
+      } else {
         calculate = (firstChars / 100).toString();
-      } catch (error) {
-        document.querySelector(".result").textContent = "Error";
       }
     }
 
@@ -81,6 +81,7 @@ document.querySelector(".button-comma").addEventListener("click", function () {
 });
 
 document.querySelector(".button-result").addEventListener("click", function () {
+  //BIKIN PEMBATAS DI RESULT
   try {
     const result = Function('"use strict"; return (' + calculate + ")")();
     calculatePast.textContent = calculate;
